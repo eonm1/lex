@@ -1,0 +1,228 @@
+package codigo;
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+	private Symbol s;
+	
+	public void syntax_error(Symbol s){
+		this.s=s;
+
+	}
+	
+	public Symbol getS(){
+		return this.s;
+	}
+
+	:};
+
+terminal
+Inicio, 
+Entero,
+Si,
+Sino,
+Mientras,
+Igual,
+Suma,
+Resta,
+Multiplicacion,
+Division,
+Y,
+O,
+No,
+Mayor,
+Menor,
+Equivale,
+Diferente,
+MayorIgual,
+MenorIgual,
+finSentencia,
+agrupacionIzquierda,
+agrupacionDerecha,
+DosPuntos,
+abreLlave,
+cierraLlave,
+abreCorchete,
+cierraCorchete,
+Identificador,
+Numero,
+NumeroFlotante,
+ErrorNumero,
+ERROR,
+ErrorIdentificador,
+PalabrasR,
+Declarar,
+Fin,
+Flotante,
+Booleano,
+Verdadero,
+Falso,
+Cadena,
+Clase,
+Doble,
+Retornar,
+Imagen,
+Tamaño,
+Largo,
+Ancho,
+C_Cadena,
+Funcion,
+Posicion,
+Ruta,
+Ingresa,
+Imprime
+;
+non terminal INICIO, SENTENCIA, DECLARACION,CUERPO,SENTENCIAS,CICLO,ASIG,CICLO_SI,CICLO_MIENTRAS,
+EXPRESION, OPARIT,TIPO,CONDICION,OPLOG,OPREL,EXPRESION1,OPARIT1,CONDICION1,DECLARA_CAD,DECLARAR_BOOL,
+FUNCION,FUNCIONES,CUERPO_FUNCION,IMAGEN,ENTRADA,SALIDA;
+
+start with INICIO;
+
+
+INICIO ::= Inicio Clase Identificador abreLlave  CUERPO cierraLlave Fin | Inicio Clase Identificador abreLlave  CUERPO cierraLlave |
+            Clase Identificador abreLlave  CUERPO cierraLlave Fin | Inicio Identificador abreLlave  CUERPO cierraLlave Fin |
+              Inicio Clase abreLlave  CUERPO cierraLlave Fin | Inicio Clase Identificador CUERPO cierraLlave Fin |
+              Inicio Clase Identificador abreLlave  CUERPO Fin
+;
+FUNCION ::= Funcion Identificador agrupacionIzquierda agrupacionDerecha abreLlave CUERPO cierraLlave
+            |
+            Identificador agrupacionIzquierda agrupacionDerecha abreLlave CUERPO cierraLlave |
+            Funcion agrupacionIzquierda agrupacionDerecha abreLlave CUERPO cierraLlave |
+            Funcion Identificador agrupacionDerecha abreLlave CUERPO cierraLlave |
+            Funcion Identificador agrupacionIzquierda abreLlave CUERPO cierraLlave |
+            Funcion Identificador agrupacionIzquierda agrupacionDerecha CUERPO cierraLlave
+;
+
+CUERPO ::=  SENTENCIAS
+;
+SENTENCIA ::= ASIG | CICLO | DECLARACION |DECLARA_CAD |DECLARAR_BOOL|Identificador agrupacionIzquierda agrupacionDerecha finSentencia |FUNCION|
+            Retornar EXPRESION finSentencia | Retornar finSentencia | IMAGEN |ENTRADA|SALIDA
+            |
+             agrupacionIzquierda agrupacionDerecha finSentencia |
+            Identificador  agrupacionDerecha finSentencia |
+            Identificador agrupacionIzquierda  finSentencia |
+            Identificador agrupacionIzquierda agrupacionDerecha |
+            EXPRESION finSentencia
+            
+;
+SENTENCIAS::= SENTENCIA SENTENCIAS |
+;
+ENTRADA::= Ingresa agrupacionIzquierda agrupacionDerecha DosPuntos Identificador finSentencia
+            |
+            agrupacionIzquierda agrupacionDerecha DosPuntos Identificador finSentencia |
+            Ingresa agrupacionDerecha DosPuntos Identificador finSentencia |
+            Ingresa agrupacionIzquierda DosPuntos Identificador finSentencia |
+            Ingresa agrupacionIzquierda agrupacionDerecha Identificador finSentencia |
+            Ingresa agrupacionIzquierda agrupacionDerecha DosPuntos finSentencia |
+            Ingresa agrupacionIzquierda agrupacionDerecha DosPuntos Identificador
+           
+;
+SALIDA::= Imprime agrupacionIzquierda agrupacionDerecha DosPuntos Identificador finSentencia
+         |
+         Imprime agrupacionIzquierda agrupacionDerecha DosPuntos Identificador |
+         Imprime agrupacionIzquierda agrupacionDerecha DosPuntos finSentencia |
+         Imprime agrupacionIzquierda agrupacionDerecha Identificador finSentencia |
+         Imprime agrupacionIzquierda DosPuntos Identificador finSentencia |
+         Imprime agrupacionDerecha DosPuntos Identificador finSentencia
+ 
+;
+IMAGEN ::= Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+            Imagen Identificador Ruta Identificador DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia
+            |
+             Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen  Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador  C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta  DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena  Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos  Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo  DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero  Ancho Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos  Numero DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho  DosPuntos Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero  Posicion Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos  Numero DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion  DosPuntos Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero  Numero finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos  finSentencia |
+             Imagen Identificador Ruta C_Cadena DosPuntos Largo Numero DosPuntos Ancho Numero DosPuntos Posicion Numero DosPuntos Numero
+
+;
+ASIG ::= Identificador Igual EXPRESION finSentencia 
+         |
+         Identificador Igual finSentencia
+;
+EXPRESION ::=  Identificador EXPRESION1 |Numero EXPRESION1 | EXPRESION1 | Identificador | Numero | NumeroFlotante | NumeroFlotante EXPRESION1
+;
+EXPRESION1 ::=  agrupacionIzquierda EXPRESION agrupacionDerecha | OPARIT EXPRESION |  agrupacionIzquierda EXPRESION agrupacionDerecha OPARIT EXPRESION
+
+;
+
+DECLARACION ::= Declarar TIPO ASIG | Declarar TIPO Identificador finSentencia
+                |
+                TIPO ASIG |
+                TIPO Identificador finSentencia |
+                Declarar Identificador finSentencia |
+                Declarar TIPO finSentencia |
+                Declarar TIPO Identificador
+
+;
+DECLARA_CAD ::= Declarar Cadena Identificador finSentencia | Declarar Cadena Identificador Igual C_Cadena finSentencia
+                |
+                 Cadena Identificador finSentencia |
+                 Declarar Cadena Identificador |
+                 Declarar Cadena finSentencia |
+                 Cadena Identificador Igual C_Cadena finSentencia |
+                 Declarar  Identificador Igual C_Cadena finSentencia |
+                 Declarar Cadena  Igual C_Cadena finSentencia |
+                 Declarar Cadena Identificador  C_Cadena finSentencia |
+                 Declarar Cadena Identificador Igual C_Cadena 
+;
+DECLARAR_BOOL ::= Declarar Booleano Identificador finSentencia |
+            Declarar Booleano Identificador Igual Verdadero finSentencia |  Declarar Booleano Identificador Igual Falso finSentencia
+            |
+            Booleano Identificador finSentencia |
+            Declarar Booleano finSentencia |
+            Declarar Booleano Identificador
+
+;
+TIPO ::= Entero | Flotante | Doble
+;
+OPARIT ::= Suma | Resta | Multiplicacion | Division
+;
+CICLO::= CICLO_SI | CICLO_MIENTRAS
+;
+CICLO_SI ::= Si agrupacionIzquierda CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave Sino abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave
+            |
+            agrupacionIzquierda CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave Sino abreLlave CUERPO cierraLlave |
+            Si  CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave Sino abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda agrupacionDerecha abreLlave CUERPO cierraLlave Sino abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda CONDICION abreLlave CUERPO cierraLlave Sino abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda CONDICION agrupacionDerecha CUERPO cierraLlave Sino abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave Sino CUERPO cierraLlave |
+             agrupacionIzquierda CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave |
+            Si  CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda agrupacionDerecha abreLlave CUERPO cierraLlave |
+            Si agrupacionIzquierda CONDICION abreLlave CUERPO cierraLlave
+;
+CONDICION ::=   EXPRESION OPREL EXPRESION CONDICION1 | No CONDICION | agrupacionIzquierda CONDICION agrupacionDerecha CONDICION1|
+                EXPRESION OPREL EXPRESION | agrupacionIzquierda CONDICION agrupacionDerecha
+
+;
+CONDICION1::=  OPLOG CONDICION 
+;
+OPLOG ::= Y | O
+;
+OPREL ::= Mayor | Menor | MayorIgual | MenorIgual | Equivale |Diferente
+;
+CICLO_MIENTRAS ::= Mientras agrupacionIzquierda CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave
+                |
+                Mientras  CONDICION agrupacionDerecha abreLlave CUERPO cierraLlave |
+                Mientras agrupacionIzquierda agrupacionDerecha abreLlave CUERPO cierraLlave |
+                Mientras agrupacionIzquierda CONDICION abreLlave CUERPO cierraLlave |
+                Mientras agrupacionIzquierda CONDICION agrupacionDerecha CUERPO cierraLlave 
+
+;
+
+

@@ -1,0 +1,26 @@
+Inicio Clase PasenosPorfi{
+    
+   Funcion nueva(){
+        Declarar Entero a=100;
+        Retornar a+1.34;
+    }
+    Declarar Entero b=1;
+    Funcion contarNumeros(){
+        Declarar Cadena cad = "Hola mundo";
+        Mientras (b=100){
+            Imprime(): cad;
+            Si (b=50){
+                Imagen perrito Ruta "\Users\bien.jpg": Largo 100: Ancho 200: Posicion 30:30; 
+            }
+            Sino{
+                nueva();
+            }
+        }
+        Declarar Booleano valor;
+        Ingresa(): valor;
+        Declarar Flotante comprobar=5;
+        Si(comprobar>=5.5){
+            comprobar = b+comprobar+3.5;
+        }    
+    }
+}Fin

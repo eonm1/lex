@@ -1,0 +1,1268 @@
+package codigo;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Rectangle;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringReader;
+import static java.lang.constant.ConstantDescs.NULL;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java_cup.runtime.Symbol;
+import javax.swing.AbstractAction;
+import javax.swing.JColorChooser;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.undo.UndoManager;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.JWindow;
+import javax.swing.KeyStroke;
+import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
+import javax.swing.*;
+import javax.swing.text.*;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Nova
+ */
+
+public class AnalizadorLexico extends javax.swing.JFrame {
+    StyleContext sc;
+    AttributeSet aset;
+    /**
+     * Creates new form AnalizadorLexico
+     */
+    NumeroLinea numeroLinea;
+    public AnalizadorLexico() {
+        initComponents();
+
+        setLocationRelativeTo(null);
+        this.getContentPane().setBackground(Color.white);
+        numeroLinea = new NumeroLinea(txtEntrada);
+        jScrollPane2.setRowHeaderView( numeroLinea );
+        jScrollPane2.createHorizontalScrollBar();
+        m=(DefaultTableModel)tblTokens.getModel();
+        mnuBar.setBackground(Color.white);
+        UndoTool.addUndoFunctionality(txtEntrada);
+       /* ArrayList<String> words = new ArrayList<>();
+        words.add("declarar");
+        words.add("inicio");
+        words.add("fin");
+        words.add("booleano");
+        words.add("verdadero");
+        words.add("falso");
+        words.add("romper");
+        words.add("caracter");
+        words.add("clase");
+        words.add("flotante");
+        words.add("doble");
+        words.add("importar");
+        words.add("nuevo");
+        words.add("retornar");
+        words.add("este");
+        words.add("imagen");
+        words.add("tamaño");
+        words.add("largo");
+        words.add("ancho");
+        words.add("entero");
+        words.add("si");
+        words.add("sino");
+        words.add("ciclo");
+        
+        AutoSuggestor autoSuggestor = new AutoSuggestor(txtEntrada, this, words, Color.BLACK, Color.WHITE, Color.GRAY.darker(), 0.60f) {
+            @Override
+            boolean wordTyped(String typedWord) {
+                System.out.println(typedWord);
+                return super.wordTyped(typedWord);//checks for a match in dictionary and returns true or false if found or not
+            }
+        };*/
+        formatoTexto();
+    }
+    public void formatoTexto()
+    {
+        TabStop[] tabs = new TabStop[9];
+        tabs[0] = new TabStop( 40 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[1] = new TabStop( 80 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[2] = new TabStop( 120 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[3] = new TabStop( 160 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[4] = new TabStop( 200 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[5] = new TabStop( 240 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[6] = new TabStop( 280 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[7] = new TabStop( 320 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        tabs[8] = new TabStop( 360 , TabStop.ALIGN_LEFT , TabStop.LEAD_NONE );
+        TabSet tabset = new TabSet( tabs );
+        sc = StyleContext.getDefaultStyleContext();
+        aset = sc.addAttribute( SimpleAttributeSet.EMPTY ,
+                StyleConstants.TabSet , tabset );
+        txtEntrada.setParagraphAttributes( aset , false );
+
+    }
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents()
+    {
+
+        estiloTablaHeader1 = new rojerusan.necesario.EstiloTablaHeader();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtErrores = new javax.swing.JTextArea();
+        jToolBar1 = new javax.swing.JToolBar();
+        btnNuevo = new javax.swing.JButton();
+        btnAbrir = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnZoomIn = new javax.swing.JButton();
+        btnZoomOut = new javax.swing.JButton();
+        btnCompilar = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblTokens = new rojerusan.RSTableMetro();
+        txtBuscar = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtEntrada = new javax.swing.JTextPane();
+        mnuBar = new javax.swing.JMenuBar();
+        mnuArchivo = new javax.swing.JMenu();
+        mnuNuevo = new javax.swing.JMenuItem();
+        mnuAbrir = new javax.swing.JMenuItem();
+        mnuGuardar = new javax.swing.JMenuItem();
+        mnuGuardarC = new javax.swing.JMenuItem();
+        mnuCerrar = new javax.swing.JMenuItem();
+        mnuEditar = new javax.swing.JMenu();
+        mnuCortar = new javax.swing.JMenuItem();
+        mnuCopiar = new javax.swing.JMenuItem();
+        mnuPegar = new javax.swing.JMenuItem();
+        mnuSeleccionar = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        mnuBackC = new javax.swing.JMenuItem();
+        mnuFontC = new javax.swing.JMenuItem();
+        mnuAyuda = new javax.swing.JMenu();
+        mnuInfo = new javax.swing.JMenuItem();
+
+        estiloTablaHeader1.setColorBackgound(new java.awt.Color(0, 102, 102));
+        estiloTablaHeader1.setColorBorde(new java.awt.Color(255, 255, 255));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        txtErrores.setEditable(false);
+        txtErrores.setColumns(20);
+        txtErrores.setForeground(new java.awt.Color(204, 0, 0));
+        txtErrores.setRows(5);
+        jScrollPane3.setViewportView(txtErrores);
+
+        jToolBar1.setBackground(new java.awt.Color(255, 255, 255));
+        jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
+        jToolBar1.setEnabled(false);
+        jToolBar1.setOpaque(false);
+
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-agregar-archivo-40.png"))); // NOI18N
+        btnNuevo.setToolTipText("Nuevo");
+        btnNuevo.setContentAreaFilled(false);
+        btnNuevo.setFocusable(false);
+        btnNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnNuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnNuevo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnNuevo);
+
+        btnAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-opened-folder-40.png"))); // NOI18N
+        btnAbrir.setToolTipText("Abrir");
+        btnAbrir.setContentAreaFilled(false);
+        btnAbrir.setFocusable(false);
+        btnAbrir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAbrir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnAbrir.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAbrirActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnAbrir);
+
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-save-40.png"))); // NOI18N
+        btnGuardar.setToolTipText("Guardar");
+        btnGuardar.setContentAreaFilled(false);
+        btnGuardar.setFocusable(false);
+        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnGuardar);
+
+        btnZoomIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-zoom-in-40.png"))); // NOI18N
+        btnZoomIn.setToolTipText("Zoom In");
+        btnZoomIn.setContentAreaFilled(false);
+        btnZoomIn.setFocusable(false);
+        btnZoomIn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnZoomIn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnZoomIn.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnZoomInActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnZoomIn);
+
+        btnZoomOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-zoom-out-40.png"))); // NOI18N
+        btnZoomOut.setToolTipText("Zoom Out");
+        btnZoomOut.setContentAreaFilled(false);
+        btnZoomOut.setFocusable(false);
+        btnZoomOut.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnZoomOut.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnZoomOut.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnZoomOutActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnZoomOut);
+
+        btnCompilar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-play-40.png"))); // NOI18N
+        btnCompilar.setToolTipText("Compilar");
+        btnCompilar.setContentAreaFilled(false);
+        btnCompilar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCompilarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnCompilar);
+
+        tblTokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String []
+            {
+                "Lexema", "Token"
+            }
+        ));
+        tblTokens.setColorBackgoundHead(new java.awt.Color(0, 102, 102));
+        tblTokens.setColorBordeFilas(new java.awt.Color(255, 255, 255));
+        tblTokens.setColorBordeHead(new java.awt.Color(255, 255, 255));
+        tblTokens.setColorFilasBackgound1(new java.awt.Color(201, 223, 223));
+        tblTokens.setColorFilasBackgound2(new java.awt.Color(204, 225, 225));
+        tblTokens.setColorFilasForeground1(new java.awt.Color(0, 102, 102));
+        tblTokens.setColorFilasForeground2(new java.awt.Color(0, 102, 102));
+        tblTokens.setColorSelBackgound(new java.awt.Color(0, 102, 102));
+        tblTokens.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        jScrollPane4.setViewportView(tblTokens);
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyReleased(java.awt.event.KeyEvent evt)
+            {
+                txtBuscarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                txtBuscarKeyTyped(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Buscar:");
+
+        jScrollPane2.setToolTipText("");
+
+        txtEntrada.setSelectedTextColor(new java.awt.Color(255, 255, 255));
+        txtEntrada.setSelectionColor(new java.awt.Color(0, 102, 102));
+        jScrollPane2.setViewportView(txtEntrada);
+
+        mnuBar.setBorder(null);
+        mnuBar.setBorderPainted(false);
+
+        mnuArchivo.setText("Archivo");
+
+        mnuNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-agregar-archivo-25.png"))); // NOI18N
+        mnuNuevo.setText("Nuevo");
+        mnuNuevo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuNuevoActionPerformed(evt);
+            }
+        });
+        mnuArchivo.add(mnuNuevo);
+
+        mnuAbrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-opened-folder-25.png"))); // NOI18N
+        mnuAbrir.setText("Abrir");
+        mnuAbrir.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuAbrirActionPerformed(evt);
+            }
+        });
+        mnuArchivo.add(mnuAbrir);
+
+        mnuGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-save-25.png"))); // NOI18N
+        mnuGuardar.setText("Guardar");
+        mnuGuardar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuGuardarActionPerformed(evt);
+            }
+        });
+        mnuArchivo.add(mnuGuardar);
+
+        mnuGuardarC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-save-as-25.png"))); // NOI18N
+        mnuGuardarC.setText("Guardar como");
+        mnuGuardarC.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuGuardarCActionPerformed(evt);
+            }
+        });
+        mnuArchivo.add(mnuGuardarC);
+
+        mnuCerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-close-window-25.png"))); // NOI18N
+        mnuCerrar.setText("Cerrar");
+        mnuCerrar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuCerrarActionPerformed(evt);
+            }
+        });
+        mnuArchivo.add(mnuCerrar);
+
+        mnuBar.add(mnuArchivo);
+
+        mnuEditar.setText("Editar");
+
+        mnuCortar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-cut-25.png"))); // NOI18N
+        mnuCortar.setText("Cortar");
+        mnuCortar.setToolTipText("Ctrl + X");
+        mnuCortar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuCortarActionPerformed(evt);
+            }
+        });
+        mnuEditar.add(mnuCortar);
+
+        mnuCopiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-copy-25.png"))); // NOI18N
+        mnuCopiar.setText("Copiar");
+        mnuCopiar.setToolTipText("Ctrl + C");
+        mnuCopiar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuCopiarActionPerformed(evt);
+            }
+        });
+        mnuEditar.add(mnuCopiar);
+
+        mnuPegar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-paste-25.png"))); // NOI18N
+        mnuPegar.setText("Pegar");
+        mnuPegar.setToolTipText("Ctrl + V");
+        mnuPegar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuPegarActionPerformed(evt);
+            }
+        });
+        mnuEditar.add(mnuPegar);
+
+        mnuSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-seleccionar-todo-25.png"))); // NOI18N
+        mnuSeleccionar.setText("Seleccionar todo");
+        mnuSeleccionar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuSeleccionarActionPerformed(evt);
+            }
+        });
+        mnuEditar.add(mnuSeleccionar);
+
+        mnuBar.add(mnuEditar);
+
+        jMenu3.setText("Vista");
+
+        mnuBackC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-fill-color-25.png"))); // NOI18N
+        mnuBackC.setText("Color de fondo");
+        mnuBackC.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuBackCActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnuBackC);
+
+        mnuFontC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-text-color-25.png"))); // NOI18N
+        mnuFontC.setText("Color de letra");
+        mnuFontC.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuFontCActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnuFontC);
+
+        mnuBar.add(jMenu3);
+
+        mnuAyuda.setText("Ayuda");
+
+        mnuInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/codigo/icons8-alta-importancia-25.png"))); // NOI18N
+        mnuInfo.setText("Información");
+        mnuInfo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mnuInfoActionPerformed(evt);
+            }
+        });
+        mnuAyuda.add(mnuInfo);
+
+        mnuBar.add(mnuAyuda);
+
+        setJMenuBar(mnuBar);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jScrollPane2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(34, 34, 34))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCompilarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompilarActionPerformed
+        anaSinc();
+		int ContadorLinea = 1;
+        File archivo = new File("archivo.txt");
+        PrintWriter escribir;
+        try {
+            escribir = new PrintWriter(archivo);
+            escribir.print(txtEntrada.getText());
+            escribir.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            Reader lector = new BufferedReader(new FileReader("archivo.txt"));
+            Lexer lexer = new Lexer(lector);
+            lexer.pintar.darEstilo(txtEntrada.getText());
+            txtEntrada.setDocument( lexer.pintar.Pintado.getDocument() );
+            txtEntrada.setCharacterAttributes( aset , false );
+            txtEntrada.setForeground(Color.BLACK );
+            String errores = "";
+            m.setRowCount(0);
+            while(true){
+                Tokens tokens = lexer.yylex();
+                if(tokens == null){
+                    txtErrores.setText(txtErrores.getText() + errores);
+                    return;
+                } 
+                switch(tokens){
+                    case Salto:
+			ContadorLinea++;
+			break;
+                    case ERROR:
+                        errores += ( "Error léxico (115). Este símbolo o cadena \"" + lexer.lexeme + "\", no forma parte del lenguaje. Linea: " + ContadorLinea + " \n" );
+                        break;
+					case abreCorchete:
+                        B[0]="[";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+					case cierraCorchete:
+                        B[0]="]";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+					case abreLlave:
+                        B[0]="{";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+					case cierraLlave:
+                        B[0]="}";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;	
+                    case Identificador: case Numero: case PalabrasR:
+                        B[0]=lexer.lexeme;
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Igual:
+                        B[0]="=";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Suma:
+                        B[0]="+";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Resta:
+                        B[0]="-";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Multiplicacion:
+                        B[0]="*";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Division:
+                        B[0]="/";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Y:
+                        B[0]="&";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case O:
+                        B[0]="%";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case No:
+                        B[0]="!";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Mayor:
+                        B[0]=">";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Menor:
+                        B[0]=">";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case MayorIgual:
+                        B[0]=">=";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case MenorIgual:
+                        B[0]="<=";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Equivale:
+                        B[0]="==";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case Diferente:
+                        B[0]="!=";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case ErrorNumero:
+                        errores += ( "Error léxico(105). Número  \"" + lexer.lexeme + "\" declarado de manera erronea. Linea: " + ContadorLinea + " \n" );
+			break;
+		    case ErrorIdentificador:
+                errores += ( "Error léxico(108). Identificador \"" + lexer.lexeme + "\" ilegal o mal declarado. Linea: " + ContadorLinea + " \n" );
+			break;
+                    case finSentencia:
+                        B[0]=";";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case NumeroFlotante:
+                        B[0]=lexer.lexeme;
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case agrupacionIzquierda:
+                        B[0]="(";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    case agrupacionDerecha:
+                        B[0]=")";
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                    default:
+                        B[0] = lexer.lexeme;
+                        B[1]=tokens;
+                        m.addRow(B);
+                        break;
+                }
+            }
+			
+		
+        } 
+		
+		catch (FileNotFoundException ex) {
+            Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+		
+    }//GEN-LAST:event_btnCompilarActionPerformed
+
+    public void anaSinc()
+    {
+		String texto = txtEntrada.getText();
+		Sintax s = new Sintax(new codigo.LexerCup(new StringReader(texto)));
+		String errores="";
+		try{
+            ERRORES.clear();
+			s.parse();
+            if (ERRORES == null || ERRORES.isEmpty()){
+                txtErrores.setText( "Análisis sintáctico realizado correctamente \n" );
+                txtErrores.setForeground( new Color( 25 , 111 , 61 ) );
+            }
+            else
+            {
+                txtErrores.setForeground( Color.RED );
+                for ( int i = 0 ; i < ERRORES.size() ; i++ )
+                {
+                    errores = errores + ERRORES.get( i ) + "\n";
+                }
+                txtErrores.setText( errores );
+            }
+			
+		}
+		catch (Exception ex){
+            String validar = "Si,Sino,Mientras,Declarar"
+                    + "Retornar,Imagen,Inicio,Fin,{,},(,)";
+
+            Symbol sym = s.getS();
+            if ( validar.contains( sym.value.toString() ) )
+            {
+                txtErrores.setText( "Error sintáctico (153). Linea: "
+                        + ( sym.right + 1 ) + " falta \";\" para terminar la sentencia \n" );
+                txtErrores.setForeground( Color.red );
+            }
+            else
+            {
+            txtErrores.setText( "Error sintáctico (152). Linea: "
+                        + ( sym.right + 1 ) + " El símbolo: \"" + sym.value + "\" no forma parte de la sentencia \n" );
+
+            txtErrores.setForeground( Color.red );
+            }
+
+		
+        }
+	}
+    private void mnuGuardarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuGuardarCActionPerformed
+        try {
+            JFileChooser chooser = new JFileChooser();          // No tienes que convertir a file
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "TXT", "BAT");
+            chooser.setFileFilter(filter);  //Este es para guardar y con get para abrir
+            int returnVal = chooser.showSaveDialog(this); //.showOpenDialog
+            if (returnVal == 0) {
+                File archivo = chooser.getSelectedFile();
+                java.io.FileWriter fs = new java.io.FileWriter(archivo);
+                fs.write(txtEntrada.getText());
+                fs.flush(); //Se guarda la informacion del buffer
+                archivoP=archivo;
+            }
+        } catch (FileNotFoundException ex) {
+            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+            //Logger.getLogger(EditorFlujo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (java.io.IOException ex) {
+            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+    }//GEN-LAST:event_mnuGuardarCActionPerformed
+
+    private void mnuGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuGuardarActionPerformed
+        if(archivoP.getName().equals("")){    
+            try { 
+                    JFileChooser chooser = new JFileChooser();  
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "TXT", "BAT");
+                    chooser.setFileFilter(filter);  //Este es para guardar y con get para abrir
+                    int returnVal = chooser.showSaveDialog(this); //.showOpenDialog
+                    if (returnVal == 0) {
+                        File archivo = chooser.getSelectedFile();
+                        java.io.FileWriter fs = new java.io.FileWriter(archivo);
+                        fs.write(txtEntrada.getText());
+                        fs.flush(); //Se guarda la informacion del buffer
+                        archivoP=archivo;
+                    }
+                } catch (FileNotFoundException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                    //Logger.getLogger(EditorFlujo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (java.io.IOException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                }
+        }else{
+            try {
+                java.io.FileWriter fs = new java.io.FileWriter(archivoP);
+                fs.write(txtEntrada.getText());
+                fs.flush(); //Se guarda la informacion del buffer
+            } catch (IOException ex) {
+                Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    
+        }
+    }//GEN-LAST:event_mnuGuardarActionPerformed
+
+    private void btnZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomInActionPerformed
+        if(tamañoLetra>30)
+            ;
+        else{
+            tamañoLetra+=4;
+            Font fuente = new Font( "Dialog" , Font.PLAIN , tamañoLetra );
+            txtEntrada . setFont ( fuente ) ;
+	}
+    }//GEN-LAST:event_btnZoomInActionPerformed
+
+    
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(archivoP.getName().equals("")){    
+            try { 
+                    JFileChooser chooser = new JFileChooser();  
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "TXT", "BAT");
+                    chooser.setFileFilter(filter);  //Este es para guardar y con get para abrir
+                    int returnVal = chooser.showSaveDialog(this); //.showOpenDialog
+                    if (returnVal == 0) {
+                        File archivo = chooser.getSelectedFile();
+                        java.io.FileWriter fs = new java.io.FileWriter(archivo);
+                        fs.write(txtEntrada.getText());
+                        fs.flush(); //Se guarda la informacion del buffer
+                        archivoP=archivo;
+                    }
+                } catch (FileNotFoundException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                    //Logger.getLogger(EditorFlujo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (java.io.IOException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                }
+        }else{
+            try {
+                java.io.FileWriter fs = new java.io.FileWriter(archivoP);
+                fs.write(txtEntrada.getText());
+                fs.flush(); //Se guarda la informacion del buffer
+            } catch (IOException ex) {
+                Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        if(!txtEntrada.getText().equals("")){
+            int input = JOptionPane.showConfirmDialog(null, "¿Desea guardar este archivo?");
+            if(input==0){
+                if(archivoP.getName().equals("")){
+                    try { 
+                            JFileChooser chooser = new JFileChooser();  
+                            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "TXT", "BAT");
+                            chooser.setFileFilter(filter);  //Este es para guardar y con get para abrir
+                            int returnVal = chooser.showSaveDialog(this); //.showOpenDialog
+                            if (returnVal == 0) {
+                                File archivo = chooser.getSelectedFile();
+                                java.io.FileWriter fs = new java.io.FileWriter(archivo);
+                                fs.write(txtEntrada.getText());
+                                fs.flush(); //Se guarda la informacion del buffer
+                                archivoP=archivo;
+                            }
+                        } catch (FileNotFoundException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                            //Logger.getLogger(EditorFlujo.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (java.io.IOException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                        }
+
+                }else{
+                    try {
+                        java.io.FileWriter fs = new java.io.FileWriter(archivoP);
+                        fs.write(txtEntrada.getText());
+                        fs.flush(); //Se guarda la informacion del buffer
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }
+        }
+        txtEntrada.setText("");
+        m.setRowCount(0);
+        m.setRowCount(19);
+        File archivoN = new File("");
+        archivoP=archivoN;
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirActionPerformed
+        if(!txtEntrada.getText().equals("")){
+            int input = JOptionPane.showConfirmDialog(null, "¿Desea guardar este archivo?");
+            if(input==0){
+                if(archivoP.getName().equals("")){
+                    try { 
+                            JFileChooser chooser = new JFileChooser();  
+                            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "TXT", "BAT");
+                            chooser.setFileFilter(filter);  //Este es para guardar y con get para abrir
+                            int returnVal = chooser.showSaveDialog(this); //.showOpenDialog
+                            if (returnVal == 0) {
+                                File archivo = chooser.getSelectedFile();
+                                java.io.FileWriter fs = new java.io.FileWriter(archivo);
+                                fs.write(txtEntrada.getText());
+                                fs.flush(); //Se guarda la informacion del buffer
+                                archivoP=archivo;
+                            }
+                        } catch (FileNotFoundException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                            //Logger.getLogger(EditorFlujo.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (java.io.IOException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                        }
+
+                }else{
+                    try {
+                        java.io.FileWriter fs = new java.io.FileWriter(archivoP);
+                        fs.write(txtEntrada.getText());
+                        fs.flush(); //Se guarda la informacion del buffer
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }
+        }
+        JFileChooser selectorArchivos = new JFileChooser();
+        selectorArchivos.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        
+        // indica cual fue la accion de usuario sobre el jfilechooser
+        int resultado = selectorArchivos.showOpenDialog(this);
+        archivoP = selectorArchivos.getSelectedFile(); // obtiene el archivo seleccionado
+
+        // muestra error si es inválido
+        
+        txtEntrada.setText("");
+        if ((archivoP == null) || (archivoP.getName().equals(""))) {
+         JOptionPane.showMessageDialog(this, "Nombre de archivo inválido", "Nombre de archivo inválido", JOptionPane.ERROR_MESSAGE);
+        } // fin de if
+        Scanner scn = null;
+        try {
+            scn = new Scanner(archivoP);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      while (scn.hasNext()) {
+            try
+            {
+                txtEntrada.getStyledDocument().insertString( txtEntrada.getText().length(), scn.nextLine() + "\n", null);
+            }
+            catch ( BadLocationException ex )
+            {
+                Logger.getLogger( AnalizadorLexico.class.getName() ).log( Level.SEVERE , null , ex );
+            }
+
+        }
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos java", "java");
+        selectorArchivos.setFileFilter(filtro);
+    }//GEN-LAST:event_btnAbrirActionPerformed
+
+    private void mnuFontCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuFontCActionPerformed
+        JColorChooser selectorColor=new JColorChooser();
+        Color nuevoColor =JColorChooser.showDialog(rootPane, "Seleccione un color", Color.blue);
+        if(nuevoColor !=null)
+        txtEntrada.setForeground(nuevoColor);
+    }//GEN-LAST:event_mnuFontCActionPerformed
+
+    private void mnuBackCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuBackCActionPerformed
+
+        JColorChooser selectorColor = new JColorChooser();
+        Color nuevoColor =JColorChooser.showDialog(rootPane, "Seleccione un color", Color.blue);
+        if ( nuevoColor != null )
+        {
+            txtEntrada.setBackground( nuevoColor );
+        }
+    }//GEN-LAST:event_mnuBackCActionPerformed
+
+    private void mnuNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuNuevoActionPerformed
+        if(!txtEntrada.getText().equals("")){
+            int input = JOptionPane.showConfirmDialog(null, "¿Desea guardar este archivo?");
+            if(input==0){
+                if(archivoP.getName().equals("")){
+                    try { 
+                            JFileChooser chooser = new JFileChooser();  
+                            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "TXT", "BAT");
+                            chooser.setFileFilter(filter);  //Este es para guardar y con get para abrir
+                            int returnVal = chooser.showSaveDialog(this); //.showOpenDialog
+                            if (returnVal == 0) {
+                                File archivo = chooser.getSelectedFile();
+                                java.io.FileWriter fs = new java.io.FileWriter(archivo);
+                                fs.write(txtEntrada.getText());
+                                fs.flush(); //Se guarda la informacion del buffer
+                                archivoP=archivo;
+                            }
+                        } catch (FileNotFoundException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                            //Logger.getLogger(EditorFlujo.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (java.io.IOException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                        }
+
+                }else{
+                    try {
+                        java.io.FileWriter fs = new java.io.FileWriter(archivoP);
+                        fs.write(txtEntrada.getText());
+                        fs.flush(); //Se guarda la informacion del buffer
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }
+        }
+        txtEntrada.setText("");
+        m.setRowCount(0);
+        m.setRowCount(19);
+        File archivoN = new File("");
+        archivoP=archivoN;
+    }//GEN-LAST:event_mnuNuevoActionPerformed
+
+    private void mnuAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAbrirActionPerformed
+        if(!txtEntrada.getText().equals("")){
+            int input = JOptionPane.showConfirmDialog(null, "¿Desea guardar este archivo?");
+            if(input==0){
+                if(archivoP.getName().equals("")){
+                    try { 
+                            JFileChooser chooser = new JFileChooser();  
+                            FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "TXT", "BAT");
+                            chooser.setFileFilter(filter);  //Este es para guardar y con get para abrir
+                            int returnVal = chooser.showSaveDialog(this); //.showOpenDialog
+                            if (returnVal == 0) {
+                                File archivo = chooser.getSelectedFile();
+                                java.io.FileWriter fs = new java.io.FileWriter(archivo);
+                                fs.write(txtEntrada.getText());
+                                fs.flush(); //Se guarda la informacion del buffer
+                                archivoP=archivo;
+                            }
+                        } catch (FileNotFoundException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                            //Logger.getLogger(EditorFlujo.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (java.io.IOException ex) {
+                            javax.swing.JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+                        }
+
+                }else{
+                    try {
+                        java.io.FileWriter fs = new java.io.FileWriter(archivoP);
+                        fs.write(txtEntrada.getText());
+                        fs.flush(); //Se guarda la informacion del buffer
+                    } catch (IOException ex) {
+                        Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }
+        }
+        JFileChooser selectorArchivos = new JFileChooser();
+        selectorArchivos.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        
+        // indica cual fue la accion de usuario sobre el jfilechooser
+        int resultado = selectorArchivos.showOpenDialog(this);
+        archivoP = selectorArchivos.getSelectedFile(); // obtiene el archivo seleccionado
+
+        // muestra error si es inválido
+        
+        txtEntrada.setText("");
+        if ((archivoP == null) || (archivoP.getName().equals(""))) {
+         JOptionPane.showMessageDialog(this, "Nombre de archivo inválido", "Nombre de archivo inválido", JOptionPane.ERROR_MESSAGE);
+        } // fin de if
+        Scanner scn = null;
+        try {
+            scn = new Scanner(archivoP);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(AnalizadorLexico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        while (scn.hasNext()) {
+            try
+            {
+                txtEntrada.getStyledDocument().insertString( txtEntrada.getText().length() , scn.nextLine() + "\n" , null );
+            }
+            catch ( BadLocationException ex )
+            {
+                Logger.getLogger( AnalizadorLexico.class.getName() ).log( Level.SEVERE , null , ex );
+            }
+
+        }
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos java", "java");
+        selectorArchivos.setFileFilter(filtro);
+    }//GEN-LAST:event_mnuAbrirActionPerformed
+
+    
+    
+    private void mnuCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCerrarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mnuCerrarActionPerformed
+
+    private void mnuCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCopiarActionPerformed
+        txtEntrada.copy();
+    }//GEN-LAST:event_mnuCopiarActionPerformed
+
+    private void mnuPegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPegarActionPerformed
+        txtEntrada.paste();
+    }//GEN-LAST:event_mnuPegarActionPerformed
+
+    private void mnuCortarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCortarActionPerformed
+        txtEntrada.cut();
+    }//GEN-LAST:event_mnuCortarActionPerformed
+
+    private void btnZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZoomOutActionPerformed
+        if (tamañoLetra<14)
+            ;
+        else{
+            tamañoLetra-=4;
+            Font fuente = new Font( "Dialog" , Font.PLAIN , tamañoLetra );
+            txtEntrada.setFont(fuente) ;
+	}
+    }//GEN-LAST:event_btnZoomOutActionPerformed
+
+    private void mnuInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuInfoActionPerformed
+        JOptionPane.showMessageDialog(this,"Realizado por: \n Paulina Alejandra Nova Ramírez"
+				+ "\n Erick Octavio Nolasco Machuca"
+            				+ "\n\n Comentarios: Son realizados con un '$' una linea de codigo a la vez"
+				+ "\n todo lo posterior a este caracter quedara en la seccion de comentarios y sera ignorado por el analizador."
+				+ "\n\n Errores: Son mostrodos en el espacio de abajo, en caso de encontrarse alguno se marca"
+				+ "\n la linea para ser ubicado facilmente."
+				+ "\n\n Tokens: Son mostrados en la tabla de la derecha justo en el orden que estan siendo recuperados."
+				+ "\n\n Espacios: Ademas de la barra espaciadora comun, el tabulador o salto de linea se puede utilizar"
+				+ "\n el caracter '#' como separador.","Informacion",
+				JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_mnuInfoActionPerformed
+
+    private void mnuSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSeleccionarActionPerformed
+        txtEntrada.requestFocus();
+	txtEntrada.selectAll();
+    }//GEN-LAST:event_mnuSeleccionarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+    
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        buscarpalabra( txtEntrada , txtBuscar.getText());
+    }//GEN-LAST:event_txtBuscarKeyReleased
+    
+
+    public void buscarpalabra( JTextPane area1 , String texto )
+    {
+        DefaultHighlighter.DefaultHighlightPainter highlightPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+            Highlighter h = area1.getHighlighter();
+		if (texto.length() >= 1) {
+            
+            h.removeAllHighlights();
+            String text = area1.getText();
+            String caracteres = texto;
+            Pattern p = Pattern.compile("(?i)" + caracteres);
+            Matcher m = p.matcher(text);
+            while (m.find()) {
+                try {
+                    h.addHighlight(m.start(), m.end(), highlightPainter);
+                } catch (BadLocationException ex) {
+                    Logger.getLogger(Color.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+			h.removeAllHighlights();
+            //JOptionPane.showMessageDialog(area1, "la palabra a buscar no puede ser vacia");
+        }
+    }
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(AnalizadorLexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(AnalizadorLexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(AnalizadorLexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(AnalizadorLexico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AnalizadorLexico().setVisible(true);
+            }
+        });
+    }
+    
+    String texto;
+    File archivoP = new File(""); 
+    DefaultTableModel m=new DefaultTableModel();
+    Object B[]=new Object[2];
+    int tamañoLetra=10;
+    public static ArrayList <String> ERRORES=new ArrayList<String>();
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAbrir;
+    private javax.swing.JButton btnCompilar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnZoomIn;
+    private javax.swing.JButton btnZoomOut;
+    private rojerusan.necesario.EstiloTablaHeader estiloTablaHeader1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JMenuItem mnuAbrir;
+    private javax.swing.JMenu mnuArchivo;
+    private javax.swing.JMenu mnuAyuda;
+    private javax.swing.JMenuItem mnuBackC;
+    private javax.swing.JMenuBar mnuBar;
+    private javax.swing.JMenuItem mnuCerrar;
+    private javax.swing.JMenuItem mnuCopiar;
+    private javax.swing.JMenuItem mnuCortar;
+    private javax.swing.JMenu mnuEditar;
+    private javax.swing.JMenuItem mnuFontC;
+    private javax.swing.JMenuItem mnuGuardar;
+    private javax.swing.JMenuItem mnuGuardarC;
+    private javax.swing.JMenuItem mnuInfo;
+    private javax.swing.JMenuItem mnuNuevo;
+    private javax.swing.JMenuItem mnuPegar;
+    private javax.swing.JMenuItem mnuSeleccionar;
+    private rojerusan.RSTableMetro tblTokens;
+    private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextPane txtEntrada;
+    private javax.swing.JTextArea txtErrores;
+    // End of variables declaration//GEN-END:variables
+}
